@@ -82,7 +82,7 @@ const SignUp = () => {
                 <div className="breadcrumbWrapper res-hide">
                     <div className="container-fluid">
                         <ul className="breadcrumb breadcrumb2 mb-0">
-                            <li><Link to="/">Home</Link>  </li>
+                            <li><Link href="/">Home</Link>  </li>
                             <li>SignUp</li>
                         </ul>
                     </div>
@@ -139,7 +139,7 @@ const SignUp = () => {
                             </div>
 
                             <p className='text-center'>Already have an account
-                                <b> <Link to="/signIn">Sign In</Link>
+                                <b> <Link href="/signIn">Sign In</Link>
                                 </b>
                             </p>
 

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import MyContext from "./ThemeContext";
 import axios from "axios";
 import data from "../../data";
+import { fetchDataFormApi } from "@/Utils/utils";
+import { useRouter } from "next/navigation";
 
 export default function ThemeProvider({ children }) {
   const [productData, setProductData] = useState([]);
@@ -15,6 +17,31 @@ export default function ThemeProvider({ children }) {
   const [isLogin, setIsLogin] = useState();
   const [isOpenFilters, setIsOpenFilters] = useState(false);
   const [cartTotalAmount, setCartTotalAmount] = useState();
+  const [searchData, setSearchData] = useState();
+  const [searchKeyWord, setSearchKeyWord] = useState();
+  const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
+  const [selectCategoriesData, setSelectCategoriesData] = useState();
+
+
+
+
+  useEffect(() => {
+    getData()
+    
+  }, []);
+
+
+  const getData = async (url) => {
+      fetchDataFormApi("/api/categories?populate=*").then((res) => {
+        setProductData(res);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      })
+  }
+
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -96,6 +123,34 @@ export default function ThemeProvider({ children }) {
     setIsOpenFilters(!isOpenFilters);
   };
 
+
+
+  const searchTrigger = () => {
+    let params;
+
+    if (selectCategoriesData !== "" && selectCategoriesData !== undefined) {
+      params = `/api/products?populate=*&[filters][categories][title]=${selectCategoriesData}&[filters][name][$contains]=${searchValue}`;
+    } else {
+      params = `/api/products?populate=*&[filters][name][$contains]=${searchValue}`;
+    }
+
+    getSearchData(params);
+  };
+
+  const getSearchData = async (url) => {
+    console.log(url, "search params");
+    fetchDataFormApi(url).then((res) => {
+      console.log(res.data, "search data");
+      setSearchData(res.data);
+      setSearchKeyWord(searchValue);
+      router.push('/blank');
+      setTimeout(() => {
+        router.push(`/search?query=${searchValue}`);
+      }, 100);
+    });
+  }
+
+
   const value = {
     cartItems,
     isLogin,
@@ -113,6 +168,16 @@ export default function ThemeProvider({ children }) {
     setCartTotalAmount,
     cartTotalAmount,
     setCartItems,
+    setSearchData,
+    searchData,
+    setSearchKeyWord,
+    searchKeyWord,
+    setSearchValue,
+    searchValue,
+    setSelectCategoriesData,
+    selectCategoriesData,
+    searchTrigger,
+    getSearchData,
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

@@ -26,7 +26,7 @@ const HomeSlider = () => {
   return (
     <section className="homeSlider">
       <div className="container-fluid position-relative">
-        <Slider {...settings} className="home_slider_Main h-[700px]">
+        <Slider {...settings} className="home_slider_Main">
           <div className="item w-full">
             <Image
               src={Slide1}

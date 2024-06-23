@@ -1,12 +1,13 @@
 import { Inter } from "next/font/google";
+import './globals.css'
+import './responsive.css'
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./responsive.css";
-import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import ThemeProvider from "@/context/ThemeProvider";
 import Header from "@/component/header/header";
+import Footer from "@/component/footer/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider>
             <Header />
             {children}
-            {/* <Footer /> */}
+            <Footer />
           </ThemeProvider>
         {/* </div> */}
       </body>

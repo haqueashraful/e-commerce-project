@@ -127,7 +127,7 @@ const SignIn = () => {
                 <div className="breadcrumbWrapper">
                     <div className="container-fluid">
                         <ul className="breadcrumb breadcrumb2 mb-0">
-                            <li><Link to="/">Home</Link>  </li>
+                            <li><Link href="/">Home</Link>  </li>
                             <li>Sign In</li>
                         </ul>
                     </div>
@@ -173,13 +173,13 @@ const SignIn = () => {
 
                             <div className='form-group mt-5 mb-4 w-100 signInOr'>
                                 <p className='text-center'>OR</p>
-                                <Button className='w-100' variant="outlined" onClick={signInWithGoogle}><Image src={GoogleImg} />
+                                <Button className='w-100' variant="outlined" onClick={signInWithGoogle}> <Image alt="google" src={GoogleImg} />
                                     Sign In with Google</Button>
                             </div>
 
 
                             <p className='text-center'>Not have an account
-                                <b> <Link to="/signup">Sign Up</Link>
+                                <b> <Link href="/signup">Sign Up</Link>
                                 </b>
                             </p>
 

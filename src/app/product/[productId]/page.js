@@ -57,7 +57,6 @@ const DetailsPage = ({ params }) => {
 
   const [isAlreadyAddedInCart, setisAlreadyAddedInCart] = useState(false);
 
-
   const zoomSliderBig = useRef();
   const zoomSlider = useRef();
 
@@ -139,23 +138,21 @@ const DetailsPage = ({ params }) => {
       fetchRelatedProducts();
     }
   }, [data]);
-  
 
   const changeInput = (name, value) => {
     if (name === "rating") {
       setRating(value);
     }
-    if(name === "userName"){
+    if (name === "userName") {
       setUserName(value);
     }
-    if(name === "review"){
+    if (name === "review") {
       setReview(value);
     }
 
     setProductId(params.productId);
 
     setDate(new Date().toLocaleString());
-
   };
 
   const reviews_Arr = [];
@@ -164,24 +161,23 @@ const DetailsPage = ({ params }) => {
     e.preventDefault();
 
     const formData = {
-      data : {
+      data: {
         review,
         userName,
         rating,
         productId,
-        date
-      }
-    }
+        date,
+      },
+    };
 
     console.log(formData, "form data");
 
-   postData("/api/product-reviews", formData).then((res) => {
-        setRating(0);
-        setReview("");
-        setUserName("");
-        setProductId(0);
-        setDate("");
-      
+    postData("/api/product-reviews", formData).then((res) => {
+      setRating(0);
+      setReview("");
+      setUserName("");
+      setProductId(0);
+      setDate("");
     });
 
     showReviews();
@@ -190,9 +186,11 @@ const DetailsPage = ({ params }) => {
   var reviews_Arr2 = [];
   const showReviews = async () => {
     try {
-      const res = await fetchDataFormApi(`/api/product-reviews?populate=*&[filters][productId]=${params.productId}`);
+      const res = await fetchDataFormApi(
+        `/api/product-reviews?populate=*&[filters][productId]=${params.productId}`
+      );
       const reviews_Arr2 = res.data;
-  
+
       if (reviews_Arr2.length !== 0) {
         setReviewsArr(reviews_Arr2);
       }
@@ -200,9 +198,8 @@ const DetailsPage = ({ params }) => {
       console.log(error.message);
     }
   };
-  
-  // showReviews();
 
+  // showReviews();
 
   const addToCart = (item) => {
     context.addToCart(item);
@@ -224,11 +221,7 @@ const DetailsPage = ({ params }) => {
     }
   };
 
-
-  useEffect(() => {
-    console.log(currentProduct.attributes, "currentProduct");
-
-  }, [currentProduct, params.productId]);
+  console.log(data, "productsData");
 
   if (!data) {
     return <Loading />;
@@ -258,7 +251,7 @@ const DetailsPage = ({ params }) => {
                 </li>
                 <li>
                   <Link
-                    href={`/category/${currentProduct.attributes?.category.data.id}`}
+                    href={`/category/${data?.category?.data.id}`}
                     onClick={() =>
                       sessionStorage.setItem(
                         "cat",
@@ -267,15 +260,13 @@ const DetailsPage = ({ params }) => {
                     }
                     className="text-capitalize"
                   >
-                    {currentProduct.attributes?.category.data.attributes.title}
+                    {data?.category?.data.attributes.title}
                   </Link>{" "}
                 </li>
 
                 <li>
                   <Link
-                    href={`/category/${prodCat.parentCat.toLowerCase()}/${prodCat.subCatName
-                      .replace(/\s/g, "-")
-                      .toLowerCase()}`}
+                    href={`/category/subcat/${data?.sub_cats?.data[0].id}`}
                     onClick={() =>
                       sessionStorage.setItem(
                         "cat",
@@ -284,7 +275,7 @@ const DetailsPage = ({ params }) => {
                     }
                     className="text-capitalize"
                   >
-                    {prodCat.subCatName}
+                    {data?.sub_cats?.data[0].attributes.title}
                   </Link>{" "}
                 </li>
                 <li>{currentProduct.productName}</li>
@@ -345,7 +336,9 @@ const DetailsPage = ({ params }) => {
                   precision={0.5}
                   readOnly
                 />
-                <span className="text-dark ml-2">({reviewsArr.length} reviews)</span>
+                <span className="text-dark ml-2">
+                  ({reviewsArr.length} reviews)
+                </span>
               </div>
 
               <div className="priceSec d-flex align-items-center mb-3">
@@ -625,7 +618,9 @@ const DetailsPage = ({ params }) => {
 
                               <div className="info pl-5">
                                 <div className="d-flex align-items-center w-100">
-                                  <h5 className="text-dark">{item.attributes.date}</h5>
+                                  <h5 className="text-dark">
+                                    {item.attributes.date}
+                                  </h5>
                                   <div className="ml-auto">
                                     <Rating
                                       name="half-rating-read"

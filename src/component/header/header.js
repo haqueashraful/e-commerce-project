@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useContext } from "react";
-import "../header/header.css";
+import "./header.css";
 import Logo from "../../assets/images/logo.svg";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
@@ -15,8 +15,7 @@ import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import ClickAwayListener from "@mui/material/ClickAwayListener"; // Corrected import
-
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Nav from "./nav/nav";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -43,7 +42,6 @@ const Header = (props) => {
   const searchInput = useRef();
   const context = useContext(MyContext);
   const [categories, setCategories] = useState([]);
-
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -156,7 +154,6 @@ const Header = (props) => {
   //   });
   // };
 
-
   if (!context) {
     return <p>Loading.....</p>;
   }
@@ -167,11 +164,11 @@ const Header = (props) => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-2 part1 d-flex align-items-center">
-              <Link href="/">
+              <Link  href="/">
                 <Image src={Logo} className="logo" alt="logo" />
               </Link>
               {windowWidth < 992 && (
-                <div className="ml-auto d-flex align-items-center">
+                <div className="ml-auto">
                   <div className="navbarToggle mr-0" onClick={openSearch}>
                     <SearchIcon />
                   </div>
@@ -248,7 +245,7 @@ const Header = (props) => {
                   />
                 </div>
                 <ClickAwayListener onClickAway={() => setIsOpenDropDown(false)}>
-                  <ul className="list list-inline mb-0 headerTabs">
+                  <ul className="list d-flex justify-content-center align-item-center list-inline mb-0 headerTabs">
                     <li className="list-inline-item">
                       <span>
                         <Image src={IconCompare} alt="compare" />
@@ -349,7 +346,6 @@ const Header = (props) => {
             <li>
               <Button className="align-items-center">
                 <Link href="#">
-                  {" "}
                   <Image src={IconCompare} alt="compare" />
                   Compare
                 </Link>
@@ -358,7 +354,6 @@ const Header = (props) => {
             <li>
               <Button className="align-items-center">
                 <Link href="#">
-                  {" "}
                   <Image src={IconCart} alt="cart" />
                   Cart
                 </Link>

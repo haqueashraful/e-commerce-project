@@ -1,18 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'); */
-/* @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Lato:wght@100;300;400;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap'); */
-/* @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css'); */
-/* @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'); */
-
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Italiana&family=Lato:wght@100;300;400;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css');
 
+/* @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Italiana&family=Lato:wght@100;300;400;700;900&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css'); */
+
 *{margin: 0px; padding: 0px; box-sizing: border-box;}
-body{font-family: 'Lato', sans-serif; font-size: 22px;}
+body{font-family: 'Lato', sans-serif; font-size: 22px !important;}
 #root{zoom: 65%;}
 .container-fluid{padding: 0px 45px;}
 
@@ -32,7 +32,7 @@ body{font-family: 'Lato', sans-serif; font-size: 22px;}
 .bg-g,.bg-success{background: #3bb77e !important;}
 .text-g{color: #3bb77e;}
 .text-org{color: #FDC040 !important;}
-.text-light{color: #8b8b8b !important;}
+h1.text-light, h2.text-light, h3.text-light, h4.text-light, h5.text-light, h6.text-light, p.text-light, a.text-light, li.text-light, span.text-light, div.text-light{color: #8b8b8b !important;}
 p{color: #7E7E7E;}
 
 .hd{font-size: 38px; font-weight: 600; margin-bottom: 25px;}

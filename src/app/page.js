@@ -1,11 +1,9 @@
 import HomePage from "@/pages/Home/Home";
-import HomeSlider from "@/pages/Home/slider";
 
 export default function Home() {
   return (
     <>
       <div style={{ display: "block" }}>
-         {/* <HomeSlider /> */}
          <HomePage />
       </div> 
     </>

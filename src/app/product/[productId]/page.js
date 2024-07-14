@@ -203,7 +203,6 @@ const DetailsPage = ({ params }) => {
   
   // showReviews();
 
-  console.log(reviewsArr, "reviewsArr");
 
   const addToCart = (item) => {
     context.addToCart(item);
@@ -224,7 +223,12 @@ const DetailsPage = ({ params }) => {
       console.log(error.message);
     }
   };
-  console.log(data, "data");
+
+
+  useEffect(() => {
+    console.log(currentProduct.attributes, "currentProduct");
+
+  }, [currentProduct, params.productId]);
 
   if (!data) {
     return <Loading />;
@@ -254,10 +258,7 @@ const DetailsPage = ({ params }) => {
                 </li>
                 <li>
                   <Link
-                    href={`/category/${prodCat.parentCat
-                      .split(" ")
-                      .join("-")
-                      .toLowerCase()}`}
+                    href={`/category/${currentProduct.attributes?.category.data.id}`}
                     onClick={() =>
                       sessionStorage.setItem(
                         "cat",
@@ -266,7 +267,7 @@ const DetailsPage = ({ params }) => {
                     }
                     className="text-capitalize"
                   >
-                    {prodCat.parentCat}
+                    {currentProduct.attributes?.category.data.attributes.title}
                   </Link>{" "}
                 </li>
 
@@ -499,7 +500,7 @@ const DetailsPage = ({ params }) => {
 
               {activeTabs === 0 && (
                 <div className="tabContent">
-                  <p>{currentProduct.description}</p>
+                  <p className="lead">{data.description}</p>
                 </div>
               )}
 
@@ -608,7 +609,6 @@ const DetailsPage = ({ params }) => {
                       {reviewsArr.length !== 0 &&
                         reviewsArr !== undefined &&
                         reviewsArr.map((item, index) => {
-                          console.log(item, "item");
                           return (
                             <div
                               className="card p-4 reviewsCard flex-row"
@@ -625,7 +625,7 @@ const DetailsPage = ({ params }) => {
 
                               <div className="info pl-5">
                                 <div className="d-flex align-items-center w-100">
-                                  <h5 className="text-light">{item.attributes.date}</h5>
+                                  <h5 className="text-dark">{item.attributes.date}</h5>
                                   <div className="ml-auto">
                                     <Rating
                                       name="half-rating-read"

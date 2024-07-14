@@ -1,13 +1,12 @@
-"use client"
+'use client'
 
 import React from 'react';
 import './footer.css';
-
 import Icon1 from '../../assets/images/icon-1.svg';
-import Icon2 from '../../assets/images/icon-2.svg'
-import Icon3 from '../../assets/images/icon-3.svg'
-import Icon4 from '../../assets/images/icon-4.svg'
-import Icon5 from '../../assets/images/icon-5.svg'
+import Icon2 from '../../assets/images/icon-2.svg';
+import Icon3 from '../../assets/images/icon-3.svg';
+import Icon4 from '../../assets/images/icon-4.svg';
+import Icon5 from '../../assets/images/icon-5.svg';
 import Logo from '../../assets/images/logo.svg';
 import Link from 'next/link';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -15,7 +14,6 @@ import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import paymentImage from '../../assets/images/payment-method.png';
-
 import appStore from '../../assets/images/app-store.jpg';
 import googlePlay from '../../assets/images/google-play.jpg';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';

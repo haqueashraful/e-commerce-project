@@ -316,7 +316,7 @@ import Loading from "@/component/Loading";
 const Nav = (props) => {
   const [navData, setNavData] = useState([]);
   const [isOpenNav, setIsOpenNav] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0
+  const [windowWidth, setWindowWidth] = useState(0);
   const [openDropdownMenu, setDropdownMenu] = useState(false);
   const [openDropdownMenuIndex, setDropdownMenuIndex] = useState(null);
   const [openMegaMenu, setOpenMegaMenu] = useState(false);
@@ -353,7 +353,7 @@ const Nav = (props) => {
       {isOpenNav && (
         <div className="navbarOverlay" onClick={props.closeNav}></div>
       )}
-      <div className={`nav d-flex align-items-center ${isOpenNav ? "click" : ""}`}>
+      <section className={`nav d-flex align-items-center ${isOpenNav ? "click" : ""}`}>
         <div className="container-fluid">
           <div className="row position-relative">
             <div className="col-sm-2 part1 d-flex align-items-center">
@@ -468,9 +468,7 @@ const Nav = (props) => {
                                       <li key={index_}>
                                         <Link
                                           onClick={props.closeNav}
-                                          href={`/category/${item.attributes.title.toLowerCase()}/${item_.attributes.title
-                                            .replace(/\s/g, "-")
-                                            .toLowerCase()}`}
+                                         href={`/category/subcat/${item_.id}`}
                                         >
                                           {item_.attributes.title}
                                         </Link>
@@ -537,7 +535,7 @@ const Nav = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };

@@ -32,8 +32,8 @@ const Product = (props) => {
     setIsadded(true);
   };
 
-
   return (
+    // <Link  href={`/product/${props.item.id}`}>
     <div className="productThumb" onClick={setProductCat}>
       {props.tag !== null && props.tag !== undefined && (
         <span className={`badge ${props.tag}`}>{props.tag}</span>
@@ -115,6 +115,7 @@ const Product = (props) => {
         </>
       )}
     </div>
+    // </Link>
   );
 };
 

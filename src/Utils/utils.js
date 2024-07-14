@@ -17,3 +17,7 @@ export const fetchDataFormApi = async (url) => {
   return data;
 };
 
+export const postData = async (url, formData) => {
+  const {res} = await axios.post("http://localhost:1337" + url, formData, params);
+  return res;
+};

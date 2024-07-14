@@ -104,7 +104,7 @@ const Search = ({ params }) => {
           {
             <div className="breadcrumb flex-column">
               <h1 className="text-capitalize">
-                {sessionStorage.getItem("subCat").split("-").join(" ")}
+                {/* {sessionStorage.getItem("subCat").split("-").join(" ")} */}
               </h1>
               <ul className="list list-inline mb-0">
                 <li className="list-inline-item">

@@ -175,7 +175,7 @@ const HomePage = () => {
                   {catArray.length !== 0 &&
                     catArray.map((cat, index) => {
                       return (
-                        <li className="list list-inline-item">
+                        <li key={index} className="list list-inline-item">
                           <Link 
                           href={""}
                             // href={`/category/${cat}`}

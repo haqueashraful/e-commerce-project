@@ -156,11 +156,6 @@ const Header = (props) => {
   //   });
   // };
 
-  useEffect(() => {
-    console.log(context.selectCategoriesData);
-    console.log(context.searchValue);
-  },[ context.selectCategoriesData, context.searchValue]);
-
 
   if (!context) {
     return <p>Loading.....</p>;

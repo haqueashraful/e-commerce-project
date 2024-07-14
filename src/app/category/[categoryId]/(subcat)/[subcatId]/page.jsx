@@ -111,7 +111,7 @@ const Listing = ({ params }) => {
                 </li>
                 {params.categoryId === "subcat" && (
                   <li className="list-inline-item">
-                    <Link href={""} class="text-capitalize">
+                    <Link href={""} className="text-capitalize">
                       {sessionStorage.getItem("subCat").split("-").join(" ")}
                     </Link>
                   </li>

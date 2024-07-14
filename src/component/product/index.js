@@ -12,6 +12,7 @@ import MyContext from "@/context/ThemeContext";
 import Link from "next/link";
 
 const Product = (props) => {
+
   const [productData, setProductData] = useState();
   const [isAdded, setIsadded] = useState(false);
 
@@ -31,7 +32,6 @@ const Product = (props) => {
     setIsadded(true);
   };
 
-  console.log(props.item.id, 'isAdded');
 
   return (
     <div className="productThumb" onClick={setProductCat}>

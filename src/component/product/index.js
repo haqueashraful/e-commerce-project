@@ -106,7 +106,7 @@ const Product = (props) => {
 
             <Button
               className="w-100 transition mt-3"
-              onClick={() => addToCart(productData)}
+              onClick={() => addToCart(props.item)}
             >
               <ShoppingCartOutlinedIcon />
               {isAdded === true ? "Added" : "Add"}

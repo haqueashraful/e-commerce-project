@@ -12,6 +12,7 @@ import Link from 'next/link';
 import MyContext from '@/context/ThemeContext';
 import QuantityBox from '@/component/quantityBox';
 import { useRouter } from 'next/navigation';
+import { fetchDataFormApi } from '@/Utils/utils';
 
 const Cart = () => {
     const router = useRouter();
@@ -36,6 +37,14 @@ const Cart = () => {
         return total + parseInt(item.price.split(",").join("")) * item.quantity;
     }, 0);
 
+
+
+    useEffect(() => {
+        fetchDataFormApi("/api/carts?populate=*").then((res) => {
+            // setCartItems(res.data)
+                console.log(res.data, "cart data")
+        })
+    }, []);
 
       // const emptyCart = () => {
     //     let response = null;

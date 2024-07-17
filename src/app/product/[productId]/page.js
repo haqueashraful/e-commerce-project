@@ -59,6 +59,7 @@ const DetailsPage = ({ params }) => {
 
   const zoomSliderBig = useRef();
   const zoomSlider = useRef();
+  const {id}= params.productId;
 
   var settings2 = {
     dots: false,
@@ -170,8 +171,6 @@ const DetailsPage = ({ params }) => {
       },
     };
 
-    console.log(formData, "form data");
-
     postData("/api/product-reviews", formData).then((res) => {
       setRating(0);
       setReview("");
@@ -221,7 +220,6 @@ const DetailsPage = ({ params }) => {
     }
   };
 
-  console.log(data, "productsData");
 
   if (!data) {
     return <Loading />;

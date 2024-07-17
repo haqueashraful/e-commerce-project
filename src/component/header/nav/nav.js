@@ -45,7 +45,6 @@
 //       {isOpenNav === true ? (
 //         <div className="navbarOverlay" onClick={props.closeNav}>
 
-          
 //         </div>
 //       ) : (
 //         <>
@@ -230,7 +229,7 @@
 //                         {/* <li className='list-inline-item'>
 //                                                     <Button><Link>Pages  <KeyboardArrowDownIcon /></Link>
 //                                                     </Button>
-            
+
 //                                                     <div className='dropdown_menu'>
 //                                                         <ul>
 //                                                             <li><Button><Link href="/about">About Us</Link></Button></li>
@@ -246,7 +245,7 @@
 //                                                             <li><Button><Link href="/about">404 Page</Link></Button></li>
 //                                                         </ul>
 //                                                     </div>
-            
+
 //                                                 </li> */}
 //                         <li className="list-inline-item">
 //                           <Button>
@@ -298,8 +297,6 @@
 
 // export default Nav;
 
-
-
 "use client";
 
 import React, { useEffect, useContext } from "react";
@@ -324,7 +321,7 @@ const Nav = (props) => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setWindowWidth(window.innerWidth);
     }
   }, []);
@@ -353,12 +350,15 @@ const Nav = (props) => {
       {isOpenNav && (
         <div className="navbarOverlay" onClick={props.closeNav}></div>
       )}
-      <section className={`nav d-flex align-items-center ${isOpenNav ? "click" : ""}`}>
+      <section
+        className={`nav d-flex align-items-center ${isOpenNav ? "click" : ""}`}
+      >
         <div className="container-fluid">
           <div className="row position-relative">
             <div className="col-sm-2 part1 d-flex align-items-center">
               <Button className="bg-g text-white catTab res-hide">
-                <GridViewIcon /> &nbsp;Browse All Categories <KeyboardArrowDownIcon />
+                <GridViewIcon /> &nbsp;Browse All Categories{" "}
+                <KeyboardArrowDownIcon />
               </Button>
             </div>
 
@@ -449,13 +449,23 @@ const Nav = (props) => {
                         />
                       </Link>
                     </Button>
-                    <div className={`dropdown_menu megaMenu w-100 ${openMegaMenu && "open"}`}>
+                    <div
+                      className={`dropdown_menu megaMenu w-100 ${
+                        openMegaMenu && "open"
+                      }`}
+                    >
                       <div className="row">
                         {navData.length > 0 &&
                           navData.map((item, index) => (
                             <div key={index} className="col">
                               <Link
                                 href={`/category/${item.attributes.title.toLowerCase()}`}
+                                onClick={() =>
+                                  sessionStorage.setItem(
+                                    "cat",
+                                    item.attributes.title.toLowerCase()
+                                  )
+                                }
                               >
                                 <h4 className="text-g text-capitalize">
                                   {item.attributes.title}
@@ -467,8 +477,14 @@ const Nav = (props) => {
                                     (item_, index_) => (
                                       <li key={index_}>
                                         <Link
-                                          onClick={props.closeNav}
-                                         href={`/category/subcat/${item_.id}`}
+                                          onClick={
+                                            (props.closeNav,
+                                            sessionStorage.setItem(
+                                              "subCat",
+                                              item_.attributes.title.toLowerCase()
+                                            ))
+                                          }
+                                          href={`/category/subcat/${item_.id}`}
                                         >
                                           {item_.attributes.title}
                                         </Link>
@@ -541,4 +557,3 @@ const Nav = (props) => {
 };
 
 export default Nav;
-

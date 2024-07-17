@@ -96,14 +96,14 @@ const Listing = ({ params }) => {
           {
             <div className="breadcrumb flex-column">
               <h1 className="text-capitalize">
-                {sessionStorage.getItem("subCat").split("-").join(" ")}
+                {sessionStorage?.getItem("subCat").split("-").join(" ")}
               </h1>
               <ul className="list list-inline mb-0">
                 <li className="list-inline-item">
                   <Link href={'/'}>Home </Link>
                 </li>
                 <li className="list-inline-item">
-                  <Link href={`/category/${sessionStorage.getItem("cat")}`}
+                  <Link href={`/category/${sessionStorage?.getItem("cat")}`}
                     className="text-capitalize"
                   >
                     {sessionStorage.getItem("cat")}{" "}
@@ -112,7 +112,7 @@ const Listing = ({ params }) => {
                 {params.categoryId === "subcat" && (
                   <li className="list-inline-item">
                     <Link href={""} className="text-capitalize">
-                      {sessionStorage.getItem("subCat").split("-").join(" ")}
+                      {sessionStorage?.getItem("subCat").split("-").join(" ")}
                     </Link>
                   </li>
                 )}

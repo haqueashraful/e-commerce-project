@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import MyContext from "./ThemeContext";
 import axios from "axios";
 import data from "../../data";
-import { fetchDataFormApi } from "@/Utils/utils";
+import { fetchDataFormApi, postData } from "@/Utils/utils";
 import { useRouter } from "next/navigation";
 
 export default function ThemeProvider({ children }) {
@@ -23,25 +23,18 @@ export default function ThemeProvider({ children }) {
   const router = useRouter();
   const [selectCategoriesData, setSelectCategoriesData] = useState();
 
-
-
-
   useEffect(() => {
-    getData()
-    
+    getData();
   }, []);
 
-
   const getData = async (url) => {
-      fetchDataFormApi("/api/categories?populate=*").then((res) => {
-        setProductData(res);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-      })
-  }
-
-
+    fetchDataFormApi("/api/categories?populate=*").then((res) => {
+      setProductData(res);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -57,7 +50,6 @@ export default function ThemeProvider({ children }) {
   //   setProductData(data[0]);
   //   setCartItems(data[2]);
   // }, []);
-
 
   useEffect(() => {
     const pdata = data.productData;
@@ -87,19 +79,26 @@ export default function ThemeProvider({ children }) {
 
   const addToCart = async (item) => {
     item.quantity = 1;
+    let productId = item.id;
+    let catId = item.attributes.category.data.id;
+    let subCatId = item.attributes.sub_cats.data[0].id;
 
-    try {
-      const res = await axios.post("http://localhost:5000/cartItems", item);
-      if (res !== undefined) {
-        setCartItems([...cartItems, { ...item, quantity: 1 }]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(productId, catId, subCatId, "addtocart");
+
+    const cart_data = {
+      catId: catId,
+      subCatId: subCatId,
+      productId: productId,
+      quantity: item.quantity,
+    };
+
+    postData("/api/carts", cart_data);
   };
 
   const removeItemsFromCart = async (id) => {
-    const response = await axios.delete(`http://localhost:5000/cartItems/${id}`);
+    const response = await axios.delete(
+      `http://localhost:5000/cartItems/${id}`
+    );
     if (response !== null) {
       getCartData("http://localhost:5000/cartItems");
     }
@@ -123,8 +122,6 @@ export default function ThemeProvider({ children }) {
     setIsOpenFilters(!isOpenFilters);
   };
 
-
-
   const searchTrigger = () => {
     let params;
 
@@ -143,13 +140,12 @@ export default function ThemeProvider({ children }) {
       console.log(res.data, "search data");
       setSearchData(res.data);
       setSearchKeyWord(searchValue);
-      router.push('/blank');
+      router.push("/blank");
       setTimeout(() => {
         router.push(`/search?query=${searchValue}`);
       }, 100);
     });
-  }
-
+  };
 
   const value = {
     cartItems,

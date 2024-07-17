@@ -83,16 +83,19 @@ export default function ThemeProvider({ children }) {
     let catId = item.attributes.category.data.id;
     let subCatId = item.attributes.sub_cats.data[0].id;
 
-    console.log(productId, catId, subCatId, "addtocart");
+    console.log(item.attributes.img.data[0].attributes.url, "url");
 
     const cart_data = {
       catId: catId,
       subCatId: subCatId,
       productId: productId,
       quantity: item.quantity,
+      name: item.attributes.name,
+      price: item.attributes.price,
+      imageUrl: item.attributes.img.data[0].attributes.url,
     };
-
-    postData("/api/carts", cart_data);
+    console.log(cart_data, "cart_data");
+     postData("/api/carts", cart_data);
   };
 
   const removeItemsFromCart = async (id) => {

@@ -431,7 +431,7 @@ const DetailsPage = ({ params }) => {
                       className={`btn-g btn-lg addtocartbtn ${
                         isAlreadyAddedInCart === true && "no-click"
                       }`}
-                      onClick={() => addToCart(currentProduct)}
+                      onClick={() => addToCart(currentProduct[0])}
                     >
                       <ShoppingCartOutlinedIcon />
                       {isAdded === true || isAlreadyAddedInCart === true

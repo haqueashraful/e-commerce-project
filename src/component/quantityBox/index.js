@@ -10,13 +10,17 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 const QuantityBox = (props) => {
-    const [inputValue, setinputValue] = useState(1);
+    const [inputValue, setinputValue] = useState();
     const [cartItems, setcartItems] = useState([]);
 
     useEffect(() => {
         setcartItems(props.cartItems);
         //setinputValue(props.item.quantity)
     }, [props.cartItems])
+
+    useEffect(() => {
+        setinputValue(props.item.attributes.quantity)
+    }, [props.item.attributes.quantity])
 
 
     const updateCart=(items)=>{

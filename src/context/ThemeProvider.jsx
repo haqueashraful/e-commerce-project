@@ -12,7 +12,6 @@ export default function ThemeProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [windowWidth, setWindowWidth] = useState(0); // Initialize with 0
-
   const [isOpenNavigation, setIsOpenNavigation] = useState(false);
   const [isLogin, setIsLogin] = useState();
   const [isOpenFilters, setIsOpenFilters] = useState(false);
@@ -77,25 +76,44 @@ export default function ThemeProvider({ children }) {
   //   }
   // };
 
+  // const addToCart = async (item) => {
+  //   item.quantity = 1;
+  //   let productId = item.id;
+  //   let catId = item.attributes.category.data.id;
+  //   let subCatId = item.attributes.sub_cats.data[0].id;
+  //   let url = item.attributes.img.data[0].attributes.url
+
+  //   console.log(url, "url");
+
+  //   const cart_data = {
+  //     // catId: catId,
+  //     // subCatId: subCatId,
+  //     productId: productId,
+  //     quantity: item.quantity,
+  //     // name: item.attributes.name,
+  //     // price: item.attributes.price,
+  //     // imageUrl: url,
+  //   };
+  //   console.log(cart_data, "cart_data");
+  //  await postData("/api/cat-data", cart_data);
+  // };
+
   const addToCart = async (item) => {
-    item.quantity = 1;
-    let productId = item.id;
-    let catId = item.attributes.category.data.id;
-    let subCatId = item.attributes.sub_cats.data[0].id;
+    const quantity = 1;
 
-    console.log(item.attributes.img.data[0].attributes.url, "url");
-
-    const cart_data = {
-      catId: catId,
-      subCatId: subCatId,
-      productId: productId,
-      quantity: item.quantity,
-      name: item.attributes.name,
-      price: item.attributes.price,
-      imageUrl: item.attributes.img.data[0].attributes.url,
-    };
-    console.log(cart_data, "cart_data");
-     postData("/api/carts", cart_data);
+    const formData = {
+      data: {
+        catId : item.attributes.category.data.id,
+        subCatId : item.attributes.sub_cats.data[0].id,
+        productId : item.id,
+        quantity : quantity,
+        name : item.attributes.name,
+        price : item.attributes.price,
+        imageUrl : item.attributes.img.data[0].attributes.url
+      }
+    }
+    await console.log(formData, "cart_data");
+    postData("/api/carts", formData);
   };
 
   const removeItemsFromCart = async (id) => {

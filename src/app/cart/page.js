@@ -17,6 +17,7 @@ const Cart = () => {
     const router = useRouter();
     const [cartItems, setCartItems] = useState([]);
     const [cartData, setCartData] = useState([]);
+    const [changes, isChanges] = useState(false);
     const context = useContext(MyContext);
 
     useEffect(() => {
@@ -32,29 +33,25 @@ const Cart = () => {
         setCartItems(items);
     }
 
-    // const subtotal = cartItems.reduce((total, item) => {
-    //     return total + parseInt(item.price.split(",").join("")) * item.quantity;
-    // }, 0);
+    const subtotal = cartItems.reduce((total, item) => {
+        return total + item.attributes.price * item.attributes.quantity;
+    }, 0);
 
-     const getCartItem = async () => {
-        const { data } = await fetchDataFormApi('/api/carts?populate=*').then (res => {
-            setCartItems(res.data);
-        })
-     }
+    const getCartItem = async () => {
+        try {
+            const { data } = await fetchDataFormApi('/api/carts?populate=*');
+            await setCartItems(data);
+        } catch (error) {
+            console.error("Error fetching cart data:", error);
+        }
+    }
 
     const getCartData = async () => {
         try {
             const { data } = await fetchDataFormApi('/api/carts?populate=*');
 
-            const productDataPromises = data.map(async (item) => {
-                setCartItems(item.attributes);
-                // setCartItems(item.attributes);
-                const res = await fetchDataFormApi(`/api/products?populate=*&[filters][id]=${item.attributes.productId}`);
-                return { ...item, product: res.data[0] };
-            });
-
-            const productsData = await Promise.all(productDataPromises);
-            setCartData(productsData);
+            await console.log(data, "data");
+            await setCartData(data);
 
         } catch (error) {
             console.error("Error fetching cart data:", error);
@@ -129,6 +126,7 @@ const Cart = () => {
                                         <thead>
                                             <tr>
                                                 <th>Product</th>
+                                                <th>Name</th>
                                                 <th>Unit Price</th>
                                                 <th>Quantity</th>
                                                 <th>Subtotal</th>
@@ -138,16 +136,19 @@ const Cart = () => {
                                         <tbody>
                                             {
                                                 cartData.map((item, index) => (
-                                                    <tr key={item.id}>
-                                                        <td width={"50%"}>
+
+                                                    console.log(item, "item"),
+
+                                                    <tr key={index}>
+                                                        <td >
                                                             <div className='d-flex align-items-center'>
-                                                                <div className='img'>
-                                                                    <Link href={`/product/${item.product.id}`}>
-                                                                        <img src={`http://localhost:1337${item.product?.attributes.img?.data[0].attributes.url}`} className='w-100' />
+                                                               <div style={{width: "200px"}} className='img'>
+                                                                    <Link href={`/product/${item.attributes.productId}`}>
+                                                                        <img src={`http://localhost:1337${item.attributes.imageUrl}`} className='w-100' />
                                                                     </Link>
                                                                 </div>
-                                                                <div className='info pl-4'>
-                                                                    <Link href={`/product/${item.product.id}`}><h4>{item.product.attributes.name}</h4></Link>
+                                                                {/* <div className='info pl-4'>
+                                                                    <Link href={`/product/${item.productId}`}><h4>{item.name}</h4></Link>
                                                                     <Rating 
                                                                         name="half-rating-read"
                                                                         value={parseFloat(item.product.attributes.rating)} 
@@ -155,15 +156,16 @@ const Cart = () => {
                                                                         readOnly 
                                                                     /> 
                                                                     <span className='text-light'>({parseFloat(item.product.attributes.rating)})</span>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
                                                         </td>
-                                                        <td width="20%"><span>Rs: {parseInt(item.product.attributes.price)}</span></td>
+                                                        <td><span>{item.attributes.name}</span></td>
+                                                        <td ><span>Rs: {item.attributes.price}</span></td>
                                                         <td>
-                                                            <QuantityBox item={item} cartItems={cartItems} index={index} updateCart={updateCart} />
+                                                            <QuantityBox item={item} cartItems={cartItems} isChanges={isChanges} index={index} updateCart={updateCart} />
                                                         </td>
                                                         <td>
-                                                            <span className='text-g'>Rs. {parseInt(item.product.attributes.price) * cartItems[index].attributes.quantity}</span>
+                                                            <span className='text-g'>Rs. {item.attributes.price * item.attributes.quantity}</span>
                                                         </td>
                                                         <td align='center'>
                                                             <span className='cursor' onClick={() => context.removeItemsFromCart(cartItems[index].id)}>
@@ -190,7 +192,7 @@ const Cart = () => {
                             <div className='card p-4 '>
                                 <div className='d-flex align-items-center mb-4'>
                                     <h5 className='mb-0 text-light'>Subtotal</h5>
-                                    {/* <h3 className='ml-auto mb-0 font-weight-bold'><span className='text-g'>{subtotal}</span></h3> */}
+                                    <h3 className='ml-auto mb-0 font-weight-bold'><span className='text-g'>{subtotal}</span></h3>
                                 </div>
                                 <div className='d-flex align-items-center mb-4'>
                                     <h5 className='mb-0 text-light'>Shipping</h5>
@@ -202,14 +204,14 @@ const Cart = () => {
                                 </div>
                                 <div className='d-flex align-items-center mb-4'>
                                     <h5 className='mb-0 text-light'>Total</h5>
-                                    {/* <h3 className='ml-auto mb-0 font-weight-bold'><span className='text-g'>{subtotal}</span></h3> */}
+                                    <h3 className='ml-auto mb-0 font-weight-bold'><span className='text-g'>{subtotal}</span></h3>
                                 </div>
                                 <br />
-                                {/* <Link href="/checkout">
+                                <Link href="/checkout">
                                     <Button className='btn-g btn-lg' onClick={() => context.setCartTotalAmount(subtotal)}>
                                         Proceed To CheckOut
                                     </Button>
-                                </Link> */}
+                                </Link>
                             </div>
                         </div>
                     </div>

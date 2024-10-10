@@ -17,7 +17,6 @@ const Cart = () => {
     const router = useRouter();
     const [cartItems, setCartItems] = useState([]);
     const [cartData, setCartData] = useState([]);
-    const [changes, isChanges] = useState(false);
     const context = useContext(MyContext);
 
     useEffect(() => {
@@ -34,8 +33,10 @@ const Cart = () => {
     }
 
     const subtotal = cartItems.reduce((total, item) => {
-        return total + item.attributes.price * item.attributes.quantity;
+        const quantity = item.quantity ? item.quantity : item.attributes.quantity;
+        return total + item.attributes.price * quantity;
     }, 0);
+
 
     const getCartItem = async () => {
         try {
@@ -50,6 +51,14 @@ const Cart = () => {
         try {
             const { data } = await fetchDataFormApi('/api/carts?populate=*');
 
+            // const productDataPromises = data.map(async (item) => {
+            //     setCartItems(item.attributes);
+            //     // setCartItems(item.attributes);
+            //     const res = await fetchDataFormApi(`/api/products?populate=*&[filters][id]=${item.attributes.productId}`);
+            //     return { ...item, product: res.data[0] };
+            // });
+
+            // const productsData = await Promise.all(productDataPromises);
             await console.log(data, "data");
             await setCartData(data);
 
@@ -136,13 +145,10 @@ const Cart = () => {
                                         <tbody>
                                             {
                                                 cartData.map((item, index) => (
-
-                                                    console.log(item, "item"),
-
                                                     <tr key={index}>
                                                         <td >
                                                             <div className='d-flex align-items-center'>
-                                                               <div style={{width: "200px"}} className='img'>
+                                                                <div style={{ width: "200px" }} className='img'>
                                                                     <Link href={`/product/${item.attributes.productId}`}>
                                                                         <img src={`http://localhost:1337${item.attributes.imageUrl}`} className='w-100' />
                                                                     </Link>
@@ -162,10 +168,14 @@ const Cart = () => {
                                                         <td><span>{item.attributes.name}</span></td>
                                                         <td ><span>Rs: {item.attributes.price}</span></td>
                                                         <td>
-                                                            <QuantityBox item={item} cartItems={cartItems} isChanges={isChanges} index={index} updateCart={updateCart} />
+                                                            <QuantityBox item={item} cartItems={cartItems} index={index} updateCart={updateCart} />
                                                         </td>
                                                         <td>
-                                                            <span className='text-g'>Rs. {item.attributes.price * item.attributes.quantity}</span>
+                                                            <span className='text-g'>
+                                                                Rs. {
+                                                                    (cartItems[index].quantity ? cartItems[index].quantity : cartItems[index].attributes.quantity) * cartItems[index].attributes.price
+                                                                }
+                                                            </span>
                                                         </td>
                                                         <td align='center'>
                                                             <span className='cursor' onClick={() => context.removeItemsFromCart(cartItems[index].id)}>

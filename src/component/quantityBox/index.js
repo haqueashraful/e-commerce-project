@@ -23,7 +23,7 @@ const QuantityBox = (props) => {
     }, [props.item.attributes.quantity])
 
 
-    const updateCart=(items)=>{
+    const updateCart = (items) => {
         props.updateCart(items)
     }
 
@@ -46,37 +46,37 @@ const QuantityBox = (props) => {
             <div className='counterSec mr-3'>
                 <input type='number' value={inputValue} />
                 <span className='arrow plus'
-                   
-                   onClick={
-                    () => {
-                        setinputValue(inputValue + 1);
-                        const _cart = props.cartItems?.map((cartItem, key) => {
-                            return key === parseInt(props.index) ? { ...cartItem, quantity: inputValue+1 } : {...cartItem}
-                           
-                        });
-                            
-                        updateCart(_cart);
-                        setcartItems(_cart);
-                       
+
+                    onClick={
+                        () => {
+                            setinputValue(inputValue + 1);
+                            const _cart = props.cartItems?.map((cartItem, key) => {
+                                return key === parseInt(props.index) ? { ...cartItem, quantity: inputValue + 1 } : { ...cartItem }
+
+                            });
+
+                            updateCart(_cart);
+                            setcartItems(_cart);
+
+                        }
                     }
-                }      
-                
+
                 ><KeyboardArrowUpIcon /></span>
 
 
                 <span className='arrow minus'
-                 onClick={
+                    onClick={
                         () => {
                             if (inputValue !== 1) {
                                 setinputValue(inputValue - 1)
                             }
-                            
+
                             const _cart = props.cartItems?.map((cartItem, key) => {
-                                return key === parseInt(props.index) ? { ...cartItem, quantity: cartItem.quantity !== 1 ? inputValue-1 : cartItem.quantity } : {...cartItem}
+                                return key === parseInt(props.index) ? { ...cartItem, quantity: cartItem.quantity !== 1 ? inputValue - 1 : cartItem.quantity } : { ...cartItem }
                             });
 
-                          
-                            
+
+
                             updateCart(_cart);
                             setcartItems(_cart);
 

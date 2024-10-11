@@ -23,11 +23,12 @@ const QuantityBox = (props) => {
     }, [props.item.attributes.quantity])
 
 
+   
     const updateCart = (items) => {
         props.updateCart(items)
     }
 
-
+    
 
     // const plus = () => {
     //     setinputValue(inputValue + 1)
@@ -79,8 +80,6 @@ const QuantityBox = (props) => {
 
                             updateCart(_cart);
                             setcartItems(_cart);
-
-
 
                         }
                     }

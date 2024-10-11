@@ -12,6 +12,7 @@ import MyContext from '@/context/ThemeContext';
 import QuantityBox from '@/component/quantityBox';
 import { useRouter } from 'next/navigation';
 import { fetchDataFormApi } from '@/Utils/utils';
+import { deleteData } from '../../Utils/utils';
 
 const Cart = () => {
     const router = useRouter();
@@ -38,29 +39,21 @@ const Cart = () => {
     }, 0);
 
 
-    const getCartItem = async () => {
-        try {
-            const { data } = await fetchDataFormApi('/api/carts?populate=*');
-            await setCartItems(data);
-        } catch (error) {
-            console.error("Error fetching cart data:", error);
-        }
-    }
+    // const getCartItem = async () => {
+    //     try {
+    //         const { data } = await fetchDataFormApi('/api/carts?populate=*');
+    //         await setCartItems(data);
+    //     } catch (error) {
+    //         console.error("Error fetching cart data:", error);
+    //     }
+    // }
 
     const getCartData = async () => {
         try {
             const { data } = await fetchDataFormApi('/api/carts?populate=*');
 
-            // const productDataPromises = data.map(async (item) => {
-            //     setCartItems(item.attributes);
-            //     // setCartItems(item.attributes);
-            //     const res = await fetchDataFormApi(`/api/products?populate=*&[filters][id]=${item.attributes.productId}`);
-            //     return { ...item, product: res.data[0] };
-            // });
-
-            // const productsData = await Promise.all(productDataPromises);
-            await console.log(data, "data");
-            await setCartData(data);
+            setCartData(data);
+            setCartItems(data);
 
         } catch (error) {
             console.error("Error fetching cart data:", error);
@@ -69,7 +62,7 @@ const Cart = () => {
 
     useEffect(() => {
         getCartData();
-        getCartItem();
+        // getCartItem();
     }, []);
 
     // const emptyCart = async () => {
@@ -86,15 +79,19 @@ const Cart = () => {
     //     context.emptyCart();
     // }
 
+    const deleteCartItem = async (id) => {
+        const response = await deleteData(`/api/carts/${id}`);
+        if (response !== null) {
+            getCartData();
+        }
+    };
 
-    // useEffect(() => {
-    //     console.log(cartItems, "quantity");
-
-    // }, [cartItems]);
 
     useEffect(() => {
-        console.log(cartItems, "quantity");
+        console.log(cartItems, "cartsItems");
+
     }, [cartItems]);
+
 
     return (
         <>
@@ -173,12 +170,12 @@ const Cart = () => {
                                                         <td>
                                                             <span className='text-g'>
                                                                 Rs. {
-                                                                    (cartItems[index].quantity ? cartItems[index].quantity : cartItems[index].attributes.quantity) * cartItems[index].attributes.price
+                                                                    (cartItems[index].quantity ? cartItems[index].quantity : item.attributes.quantity) * cartItems[index].attributes.price
                                                                 }
                                                             </span>
                                                         </td>
                                                         <td align='center'>
-                                                            <span className='cursor' onClick={() => context.removeItemsFromCart(cartItems[index].id)}>
+                                                            <span className='cursor' onClick={() => deleteCartItem(item.id)}>
                                                                 <DeleteOutlineOutlinedIcon />
                                                             </span>
                                                         </td>

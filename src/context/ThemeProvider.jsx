@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import MyContext from "./ThemeContext";
 import axios from "axios";
 import data from "../../data";
-import { fetchDataFormApi, postData } from "@/Utils/utils";
+import { fetchDataFormApi, postData, deleteData } from "@/Utils/utils";
 import { useRouter } from "next/navigation";
 
 export default function ThemeProvider({ children }) {
@@ -103,23 +103,20 @@ export default function ThemeProvider({ children }) {
 
     const formData = {
       data: {
+        quantity : quantity,
         catId : item.attributes.category.data.id,
         subCatId : item.attributes.sub_cats.data[0].id,
         productId : item.id,
-        quantity : quantity,
         name : item.attributes.name,
         price : item.attributes.price,
         imageUrl : item.attributes.img.data[0].attributes.url
       }
     }
-    await console.log(formData, "cart_data");
     postData("/api/carts", formData);
   };
 
   const removeItemsFromCart = async (id) => {
-    const response = await axios.delete(
-      `http://localhost:5000/cartItems/${id}`
-    );
+    const response = await deleteData(`/api/carts/${id}`);
     if (response !== null) {
       getCartData("http://localhost:5000/cartItems");
     }
